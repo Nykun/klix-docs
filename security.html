@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Security — Default Values Everywhere for Jira</title>
+<style>:root{--bg:#fff;--fg:#172b4d;--muted:#5e6c84;--line:#dfe1e6;--link:#0c66e4}
+@media (prefers-color-scheme:dark){:root{--bg:#1d2125;--fg:#c7d1db;--muted:#8c9bab;--line:#38414a;--link:#579dff}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+main,nav{max-width:860px;margin:0 auto;padding:0 16px}nav{padding-top:16px;border-bottom:1px solid var(--line)}
+nav a{margin-right:16px;display:inline-block;padding-bottom:8px}a{color:var(--link)}
+table{border-collapse:collapse;width:100%;display:block;overflow-x:auto}th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+code{background:var(--line);padding:1px 4px;border-radius:3px}footer{color:var(--muted);font-size:14px;padding:32px 0}</style></head><body><nav><a href="index.html">User guide</a><a href="privacy.html">Privacy policy</a><a href="support.html">Support</a><a href="eula.html">License (EULA)</a><a href="security.html">Security</a></nav><main><h1>Security — Default Values Everywhere for Jira</h1>
+<p><em>Publisher: Klix (Anthony Laude) · Security contact: support@klix.nc · Updated 2026-09-29</em></p>
+<h2>Architecture</h2>
+<ul>
+<li>Built on Atlassian Forge and eligible for <strong>Runs on Atlassian</strong>: no remote backend, no external egress, no servers operated by the publisher.</li>
+<li>Data (default-value rules and a 30-day activity log) is stored only in Forge-hosted storage, encrypted at rest by Atlassian, in the customer site's data residency location.</li>
+<li>The publisher has no access to customer data. The app never asks for passwords, API tokens or other credentials.</li>
+</ul>
+<h2>Secure development</h2>
+<ul>
+<li>Least-privilege scopes, each justified in the listing.</li>
+<li>Server-side authorization: every admin request is checked against the caller's Jira administrator permission before any write.</li>
+<li>Server-side validation of all rule input (shape, types, sizes).</li>
+<li>Before every commit: unit tests, strict type checks, manifest validation against the Forge schema, and verification of every REST call against Atlassian's official OpenAPI specifications. Changes are tested on a development site before production.</li>
+<li>Dependencies are kept minimal (Atlassian Forge SDK) and scanned with <code>npm audit</code> before each release.</li>
+<li>Logs contain only work item keys, field IDs and status codes: no personal data, credentials or tokens.</li>
+<li>Publisher workstation: supported operating system with automatic updates and real-time endpoint protection.</li>
+</ul>
+<h2>Vulnerability remediation</h2>
+<p>We follow the <a href="https://developer.atlassian.com/platform/marketplace/security-bugfix-policy/">Atlassian Marketplace Security Bug Fix Policy</a>:</p>
+<table>
+<thead>
+<tr>
+<th>Severity</th>
+<th>Fixed within</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Critical (CVSS ≥ 9.0)</td>
+<td>10 days</td>
+</tr>
+<tr>
+<td>High (≥ 7.0)</td>
+<td>4 weeks</td>
+</tr>
+<tr>
+<td>Medium (≥ 4.0)</td>
+<td>12 weeks</td>
+</tr>
+<tr>
+<td>Low (&lt; 4.0)</td>
+<td>25 weeks</td>
+</tr>
+</tbody>
+</table>
+<h2>Incident response</h2>
+<ol>
+<li><strong>Contain</strong>: disable the affected feature or roll back to the previous version (Forge deployment rollback).</li>
+<li><strong>Notify Atlassian</strong> with a P1 ticket in the Marketplace Partner service desk <strong>within 24 hours</strong> of discovery, with scope, impact on end-user data, containment, and estimated resolution; update Atlassian at least every 6 hours during remediation.</li>
+<li><strong>Notify affected customers within 72 hours</strong>, using Atlassian's communication templates.</li>
+<li><strong>Fix, verify, deploy</strong>, then publish a root-cause analysis and preventive actions.</li>
+</ol>
+<h2>Reporting a vulnerability</h2>
+<p>Email <strong>support@klix.nc</strong> with "SECURITY" in the subject. We acknowledge within 1 business day.</p><footer>Klix · support@klix.nc</footer></main></body></html>
