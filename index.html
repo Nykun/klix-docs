@@ -1,0 +1,101 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>User guide — Default Values Everywhere for Jira</title>
+<style>:root{--bg:#fff;--fg:#172b4d;--muted:#5e6c84;--line:#dfe1e6;--link:#0c66e4}
+@media (prefers-color-scheme:dark){:root{--bg:#1d2125;--fg:#c7d1db;--muted:#8c9bab;--line:#38414a;--link:#579dff}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+main,nav{max-width:860px;margin:0 auto;padding:0 16px}nav{padding-top:16px;border-bottom:1px solid var(--line)}
+nav a{margin-right:16px;display:inline-block;padding-bottom:8px}a{color:var(--link)}
+table{border-collapse:collapse;width:100%;display:block;overflow-x:auto}th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+code{background:var(--line);padding:1px 4px;border-radius:3px}footer{color:var(--muted);font-size:14px;padding:32px 0}</style></head><body><nav><a href="index.html">User guide</a><a href="privacy.html">Privacy policy</a><a href="support.html">Support</a><a href="eula.html">License (EULA)</a></nav><main><h1>Default Values Everywhere for Jira — User guide</h1>
+<p>Default field values for Jira Cloud that apply wherever work items are created: the Create dialog, backlog and board inline create, the REST API, incoming email, the customer portal and automation rules.</p>
+<h2>1. Install</h2>
+<p>Install the app from the Atlassian Marketplace. It runs entirely on Atlassian Forge ("Runs on Atlassian"): no data leaves your Atlassian site.</p>
+<h2>2. Create a rule</h2>
+<ol>
+<li>Go to <strong>Jira settings → Apps → Default Values Everywhere</strong> (Jira administrators only).</li>
+<li>Under <strong>New rule</strong>, pick a <strong>project</strong> and a <strong>work type</strong> (or <em>All work types</em>).</li>
+<li>The fields available on that project's screens are listed. Enter a default value for each field you want; leave the others empty.</li>
+<li>Click <strong>Save rule</strong>. Rules apply immediately.</li>
+</ol>
+<p>A rule for a specific work type takes precedence, field by field, over the project's <em>All work types</em> rule.</p>
+<h3>Supported fields</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Description</td>
+<td>Text template (line breaks kept)</td>
+</tr>
+<tr>
+<td>Labels</td>
+<td>Comma-separated labels (no spaces inside a label)</td>
+</tr>
+<tr>
+<td>Components, Fix versions, Affects versions</td>
+<td>One or more values</td>
+</tr>
+<tr>
+<td>Assignee, Reporter</td>
+<td>A user</td>
+</tr>
+<tr>
+<td>Due date, date fields</td>
+<td>A fixed date (YYYY-MM-DD) or a relative one: <code>+7</code> = 7 days after creation</td>
+</tr>
+<tr>
+<td>Custom fields</td>
+<td>Text, paragraph, number, date, date-time, URL, single and multi select, cascading select, checkboxes, radio buttons, user and multi-user pickers</td>
+</tr>
+<tr>
+<td>Priority</td>
+<td>Prefilled in the Create dialog (see limits)</td>
+</tr>
+</tbody>
+</table>
+<h2>3. How defaults are applied</h2>
+<table>
+<thead>
+<tr>
+<th>Where the work item is created</th>
+<th>What happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create dialog (expanded view)</td>
+<td>Defaults are prefilled as soon as the dialog opens. Anything the user changes is kept.</td>
+</tr>
+<tr>
+<td>Backlog / board inline create, REST API, incoming email, customer portal, automation rules</td>
+<td>Within a few seconds after creation, <strong>empty</strong> fields covered by the rule are filled. Fields that already have a value are never changed.</td>
+</tr>
+</tbody>
+</table>
+<p>Every completion is recorded in the <strong>Activity log</strong> on the app's admin page (last 100 entries, kept 30 days), and the change appears in the work item's history under the app's name.</p>
+<h2>4. Known limits</h2>
+<ul>
+<li><strong>Fields required at creation</strong> can only be covered by the Create dialog: Jira refuses to create the work item before the app can act.</li>
+<li><strong>Compact Create view</strong>: defaults are not prefilled until the dialog is expanded; empty fields are completed after creation.</li>
+<li><strong>Priority after creation</strong>: Jira always sets the priority from the project's priority scheme, so the app does not replace it after creation. Use your priority scheme for these channels.</li>
+<li><strong>CSV "External System Import"</strong> does not send a creation event, so imported work items are not completed.</li>
+<li>Sprint, Story point estimate, Team, Security level, attachments and fields provided by other apps are not supported.</li>
+<li>Changes made after creation may trigger "updated" notifications to watchers.</li>
+</ul>
+<h2>5. Privacy and security</h2>
+<ul>
+<li>Stored: your rules and the activity log, in Atlassian's Forge storage in your site's data residency region. No work item content is stored.</li>
+<li>The publisher has no access to your data. Nothing is sent to external servers.</li>
+<li>Only Jira administrators can view or change rules; this is checked on the server for every request.</li>
+</ul>
+<h2>6. FAQ</h2>
+<p><strong>Does it overwrite values people typed?</strong> No. In the Create dialog it only replaces what the user has not touched; after creation it only fills empty fields.
+<strong>How fast is completion after creation?</strong> Usually 4 to 7 seconds in our tests (it can take longer during Atlassian platform incidents).
+<strong>What happens if a default value becomes invalid (archived version, deactivated user)?</strong> The other fields are still filled; the invalid one is skipped and shown as <em>partial</em> in the activity log.
+<strong>Does it cost Forge usage for projects without rules?</strong> No. Projects without a rule do not invoke the app.</p>
+<h2>7. Support</h2>
+<p>support@klix.nc — see the support page for response times.</p><footer>Klix · support@klix.nc</footer></main></body></html>
